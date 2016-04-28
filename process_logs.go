@@ -31,6 +31,7 @@ type test_struct struct {
 func processLogs(w http.ResponseWriter, r *http.Request) {
 	c := redisPool.Get()
 	defer c.Close()
+	r.parseForm()
 
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
@@ -42,8 +43,6 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 				fmt.Printf("Error parsing log line: %v\n", err)
 			} else {
 				timeBucket, err := timestamp2Bucket(lp.Header().Time)
-				header := lp.Header()
-				fmt.Sprintf("HEADER %v", header)
 				if err != nil {
 					fmt.Printf("Error parsing time: %v", err)
 					continue
@@ -56,7 +55,7 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					fmt.Printf("Error running INCR on Redis: %v\n", err)
 				}
-				fmt.Printf("%v @ %v: +1\n", rl.host, timeBucket)
+				fmt.Printf("%v @ %v: +1\n %v", rl.host, timeBucket, rl)
 			}
 		}
 	}
