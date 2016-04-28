@@ -39,7 +39,7 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
     var t test_struct   
     err := decoder.Decode(&t)
     if err != nil {
-        panic()
+        log.Println("err: ", err)
     }
     log.Println(t.Test)
 
