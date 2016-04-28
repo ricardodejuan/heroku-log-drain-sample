@@ -2,7 +2,7 @@
 	"name": "Heroku Log Drain Sample App",
 	"description": "A Go app demonstrating how to receive and process logs from Heroku apps via Heroku's Logplex service",
 	"env": {
-		"BUILDPACK_URL": "https://github.com/ricardodejuan/heroku-log-drain-sample.git",
+		"BUILDPACK_URL": "https://github.com/kr/heroku-buildpack-go.git",
 		"AUTH_SECRET": {
 			"description": "protects from unauthorized writing to the log processing endpoint and doubles as authentication token for getting stats out.",
 			"generator": "secret"
