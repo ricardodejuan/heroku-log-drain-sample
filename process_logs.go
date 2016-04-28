@@ -31,7 +31,7 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
 	for lp.Next() {
-		fmt.Printf("TEST ", lp)
+		fmt.Printf("TEST ", string(lp))
 		// we only care about logs from the heroku router
 		if string(lp.Header().Procid) == "router" {
 			rl := new(routerLog)
