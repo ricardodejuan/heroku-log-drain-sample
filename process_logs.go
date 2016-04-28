@@ -5,10 +5,10 @@ import (
 	"bufio"
 	"time"
 	"net/http"
- 	"io/ioutil"
 	"github.com/bmizerany/lpx"
 	"github.com/kr/logfmt"
-	"os"
+	"log"
+    "encoding/json" 
 )
 
 // This struct and the method below takes care of capturing the data we need
@@ -27,19 +27,17 @@ func (r *routerLog) HandleLogfmt(key, val []byte) error {
 
 // This is called every time we receive log lines from an app
 func processLogs(w http.ResponseWriter, r *http.Request) {
-
-
-	htmlData, err := ioutil.ReadAll(r.Body) //<--- here!
-
-	if err != nil {
- 		fmt.Println(err)
- 		os.Exit(1)
- 	}
-
- 	fmt.Println(os.Stdout, string(htmlData)) //<-- here !
-
 	c := redisPool.Get()
 	defer c.Close()
+
+
+	decoder := json.NewDecoder(req.Body)
+    var t test_struct   
+    err := decoder.Decode(&t)
+    if err != nil {
+        panic()
+    }
+    log.Println(t.Test)
 
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
