@@ -34,16 +34,24 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 	c := redisPool.Get()
 	defer c.Close()
 
+    	fmt.Printf("handle signup")
 
- 	htmlData, err := ioutil.ReadAll(r.Body) //<--- here!
+    	
 
- 	if err != nil {
- 		fmt.Println(err)
- 		os.Exit(1)
- 	}
+    	hah, err := ioutil.ReadAll(r.Body);
 
- 	// print out
- 	fmt.Println(string(htmlData)) //<-- here !
+    	
+
+    	if err != nil {
+
+    		fmt.Printf("%s", err)
+
+    	}
+
+
+    	fmt.Printf("%s",hah)
+
+
 
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
@@ -68,6 +76,7 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 					fmt.Printf("Error running INCR on Redis: %v\n", err)
 				}
 				fmt.Printf("%v @ %v: +1\n", rl.host, timeBucket)
+				fmt.Printf("%v", lp.Header()))
 			}
 		}
 	}
