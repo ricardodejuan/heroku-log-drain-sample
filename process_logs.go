@@ -33,25 +33,6 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 	c := redisPool.Get()
 	defer c.Close()
 
-    	fmt.Printf("handle signup")
-
-  
-
-    	hah, err := ioutil.ReadAll(r.Body);
-
-    	
-
-    	if err != nil {
-
-    		fmt.Printf("%s", err)
-
-    	}
-
-
-    	fmt.Printf("%s",hah)
-
-
-
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
 	for lp.Next() {
@@ -62,6 +43,8 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 				fmt.Printf("Error parsing log line: %v\n", err)
 			} else {
 				timeBucket, err := timestamp2Bucket(lp.Header().Time)
+				header := lp.Header()
+				fmt.Printf("HEADER %v", header)
 				if err != nil {
 					fmt.Printf("Error parsing time: %v", err)
 					continue
