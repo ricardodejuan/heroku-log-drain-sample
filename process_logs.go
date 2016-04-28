@@ -5,7 +5,6 @@ import (
 	"bufio"
 	"time"
 	"net/http"
-	"io/ioutil"
 	"github.com/bmizerany/lpx"
 	"github.com/kr/logfmt"
 )
