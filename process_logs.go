@@ -31,6 +31,11 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 
 	htmlData, err := ioutil.ReadAll(r.Body) //<--- here!
 
+	if err != nil {
+ 		fmt.Println(err)
+ 		os.Exit(1)
+ 	}
+
  	fmt.Println(os.Stdout, string(htmlData)) //<-- here !
 
 	c := redisPool.Get()
