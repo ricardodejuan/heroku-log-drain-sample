@@ -31,7 +31,6 @@ type test_struct struct {
 func processLogs(w http.ResponseWriter, r *http.Request) {
 	c := redisPool.Get()
 	defer c.Close()
-	r.parseForm()
 
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
