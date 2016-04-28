@@ -28,7 +28,7 @@ func (r *routerLog) HandleLogfmt(key, val []byte) error {
 func processLogs(w http.ResponseWriter, r *http.Request) {
 	c := redisPool.Get()
 	defer c.Close()
-	fmt.Printf("REQUEST ", r)
+	fmt.Printf("REQUEST ", r.Body)
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
 	for lp.Next() {
