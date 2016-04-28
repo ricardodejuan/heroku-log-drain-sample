@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"github.com/bmizerany/lpx"
 	"github.com/kr/logfmt"
- 	"os"    
 )
 
 // This struct and the method below takes care of capturing the data we need
