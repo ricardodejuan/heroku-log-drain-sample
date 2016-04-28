@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"github.com/bmizerany/lpx"
 	"github.com/kr/logfmt"
+"	encoding/json"
 )
 
 // This struct and the method below takes care of capturing the data we need
@@ -27,11 +28,10 @@ func (r *routerLog) HandleLogfmt(key, val []byte) error {
 func processLogs(w http.ResponseWriter, r *http.Request) {
 	c := redisPool.Get()
 	defer c.Close()
-
+	fmt.Printf("REQUEST ", r)
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
 	for lp.Next() {
-		fmt.Printf("TEST ", string(lp))
 		// we only care about logs from the heroku router
 		if string(lp.Header().Procid) == "router" {
 			rl := new(routerLog)
