@@ -43,7 +43,7 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 			} else {
 				timeBucket, err := timestamp2Bucket(lp.Header().Time)
 				header := lp.Header()
-				fmt.Printf("HEADER %v", header)
+				fmt.Sprintf("HEADER %v", header)
 				if err != nil {
 					fmt.Printf("Error parsing time: %v", err)
 					continue
