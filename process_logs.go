@@ -5,10 +5,10 @@ import (
 	"bufio"
 	"time"
 	"net/http"
+	"io/ioutil"
 	"github.com/bmizerany/lpx"
 	"github.com/kr/logfmt"
-	"log"
-    "encoding/json" 
+ 	"os"    
 )
 
 // This struct and the method below takes care of capturing the data we need
@@ -35,13 +35,15 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 	defer c.Close()
 
 
-	decoder := json.NewDecoder(r.Body)
-    var t test_struct   
-    err := decoder.Decode(&t)
-    if err != nil {
-        log.Println("err: ", err)
-    }
-    log.Println(t.Test)
+ 	htmlData, err := ioutil.ReadAll(r.Body) //<--- here!
+
+ 	if err != nil {
+ 		fmt.Println(err)
+ 		os.Exit(1)
+ 	}
+
+ 	// print out
+ 	fmt.Println(string(htmlData)) //<-- here !
 
 	lp := lpx.NewReader(bufio.NewReader(r.Body))
 	// a single request may contain multiple log lines. Loop over each of them
