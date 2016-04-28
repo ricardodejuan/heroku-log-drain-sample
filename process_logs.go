@@ -36,7 +36,7 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 
     	fmt.Printf("handle signup")
 
-    	
+  
 
     	hah, err := ioutil.ReadAll(r.Body);
 
@@ -76,7 +76,6 @@ func processLogs(w http.ResponseWriter, r *http.Request) {
 					fmt.Printf("Error running INCR on Redis: %v\n", err)
 				}
 				fmt.Printf("%v @ %v: +1\n", rl.host, timeBucket)
-				fmt.Printf("%v", lp.Header()))
 			}
 		}
 	}
