@@ -25,13 +25,17 @@ func (r *routerLog) HandleLogfmt(key, val []byte) error {
 	return nil
 }
 
+type test_struct struct {
+    Test string
+}
+
 // This is called every time we receive log lines from an app
 func processLogs(w http.ResponseWriter, r *http.Request) {
 	c := redisPool.Get()
 	defer c.Close()
 
 
-	decoder := json.NewDecoder(req.Body)
+	decoder := json.NewDecoder(r.Body)
     var t test_struct   
     err := decoder.Decode(&t)
     if err != nil {
